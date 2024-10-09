@@ -9,11 +9,7 @@ const Sidebar = () => {
   const renderNavLinks = (links) => (
     <ul className="space-y-2">
       {links.map((link) => (
-        <NavLink
-          key={link.label}
-          link={link}
-          isActive={pathname === link.route}
-        />
+        <NavLink key={link.label} link={link} isActive={pathname === link.route} />
       ))}
     </ul>
   );
@@ -21,12 +17,8 @@ const Sidebar = () => {
   return (
     <aside className="w-16 md:w-20 lg:w-56 transition-all duration-300 flex flex-col border-r border-borderGray">
       <nav className="flex-1 my-6 flex flex-col">
-        <div className="overflow-y-auto flex-grow">
-          {renderNavLinks(topLinks)}
-        </div>
-        <div className="mt-auto">
-          {renderNavLinks(bottomLinks)}
-        </div>
+        <div className="overflow-y-auto flex-grow">{renderNavLinks(topLinks)}</div>
+        <div className="mt-auto">{renderNavLinks(bottomLinks)}</div>
       </nav>
     </aside>
   );

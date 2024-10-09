@@ -7,7 +7,7 @@ export const createPost = [
     async (req, res) => {
         try {
             const { title, content } = req.body;
-            const image = req.file ? `/uploads/posts/${req.file.filename}` : null;
+            const image = req.file ? `/uploads/${req.file.filename}` : null;
 
             const newPost = new Post({
                 title,
@@ -26,8 +26,12 @@ export const createPost = [
 // Get all posts
 export const getAllPosts = async (req, res) => {
     try {
-        const posts = await Post.find();
-        res.status(200).json(posts);
+        const posts = await Post.find().lean();
+        const formattedPosts = posts.map(post => ({
+            ...post,
+            date: post.date // This will now be the formatted date
+        }));
+        res.status(200).json(formattedPosts);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

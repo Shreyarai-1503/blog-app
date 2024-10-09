@@ -1,10 +1,5 @@
 import mongoose from "mongoose";
 
-const formatDate = (date) => {
-    const options = { day: '2-digit', month: 'long' };
-    return date.toLocaleDateString('en-US', options).replace(' ', '-');
-};
-
 const postSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -25,9 +20,10 @@ const postSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now,
-        get: formatDate,
     },
-}, { timestamps: true });
+}, { 
+    timestamps: true,
+});
 
 const Post = mongoose.model("Post", postSchema);
 export default Post;

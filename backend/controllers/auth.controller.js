@@ -31,7 +31,7 @@ export const register = [
         email,
         password: hashedPassword,
         designation,
-        image: req.file ? `/uploads/avatars/${req.file.filename}` : null
+        image: req.file ? `/uploads/${req.file.filename}` : null
       });
 
       // Save user to database

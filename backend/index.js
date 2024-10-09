@@ -11,7 +11,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   optionsSuccessStatus: 200 
 };
 
@@ -28,11 +28,11 @@ connectDB();
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/posts', postsRoutes);
+app.use('/api/blog', postsRoutes);
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
+  console.error(err);
+  res.status(500).json({ message: 'Internal server error' });
 });
 
 app.get('/', (req, res) => {

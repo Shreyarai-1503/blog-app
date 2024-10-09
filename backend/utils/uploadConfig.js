@@ -1,17 +1,15 @@
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    let uploadPath = 'uploads/';
+    // Adjust this path to point to your frontend's public folder
+    let uploadPath = path.join(process.cwd(), '..', 'frontend', 'public', 'uploads');
     
-    // Determine the upload path based on the route
-    if (req.baseUrl.includes('/auth')) {
-      uploadPath += 'avatars/';
-    } else if (req.baseUrl.includes('/posts')) {
-      uploadPath += 'posts/';
-    }
-
+    // Ensure the directory exists
+    fs.mkdirSync(uploadPath, { recursive: true });
+    
     cb(null, uploadPath);
   },
   filename: function (req, file, cb) {

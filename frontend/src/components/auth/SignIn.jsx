@@ -7,28 +7,21 @@ import authService from "../../services/authService";
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
-      const response = await authService.signin(formData);
+      await authService.signin(formData);
       navigate('/blog');
     } catch (error) {
-      console.error("Sign-in error:", error);
       setError("Invalid email or password. Please try again.");
     }
   };
@@ -57,9 +50,7 @@ const SignIn = () => {
             onChange={handleChange}
             required
           />
-          {error && (
-            <p className="text-red-500 text-sm">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm">{error}</p>}
           <div className="flex items-center justify-between">
             <Button variant="primary" type="submit" className="w-auto px-4 py-2">
               Sign In

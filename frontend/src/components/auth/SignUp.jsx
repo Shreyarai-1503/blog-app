@@ -36,10 +36,14 @@ const SignUp = () => {
 
     try {
       const response = await authService.signup(formData);
-      navigate('/blog');
+      if (response.token) {
+        navigate('/blog');
+      } else {
+        setError("Signup successful, but no token received. Please try logging in.");
+      }
     } catch (error) {
-      console.error("Sign-up error:", error);
-      setError(error.response?.data?.message || error.message || "An error occurred during sign-up");
+      console.error("Signup error:", error);
+      setError(error.response?.data?.message || "An error occurred during sign-up. Please try again.");
     }
   };
 
@@ -51,79 +55,25 @@ const SignUp = () => {
           <h2 className="text-2xl font-bold text-gray-800">Sign Up</h2>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-          <FormField
-            label="Name"
-            name="name"
-            type="text"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-          <FormField
-            label="Email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          <FormField
-            label="Password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          <FormField
-            label="Confirm Password"
-            name="confirmPassword"
-            type="password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-          />
-          <FormField
-            label="Designation"
-            name="designation"
-            type="text"
-            value={formData.designation}
-            onChange={handleChange}
-            required
-          />
+          <FormField label="Name" name="name" type="text" value={formData.name} onChange={handleChange} required />
+          <FormField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} required />
+          <FormField label="Password" name="password" type="password" value={formData.password} onChange={handleChange} required />
+          <FormField label="Confirm Password" name="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} required />
+          <FormField label="Designation" name="designation" type="text" value={formData.designation} onChange={handleChange} required />
           <div className="space-y-2">
-            <label
-              htmlFor="profilePicture"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="profilePicture" className="block text-sm font-medium text-gray-700">
               Profile Picture
             </label>
-            <input
-              type="file"
-              id="profilePicture"
-              name="profilePicture"
-              accept="image/*"
-              onChange={handleChange}
-              className="block w-full text-sm text-gray-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-full file:border-0
-                file:text-sm file:font-semibold
-                file:bg-purple-50 file:text-primary"
-            />
+            <input type="file" id="profilePicture" name="profilePicture" accept="image/*" onChange={handleChange} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-primary" />
           </div>
-          {error && (
-            <div className="text-red-500 text-sm">{error}</div>
-          )}
+          {error && <div className="text-red-500 text-sm">{error}</div>}
           <div className="flex items-center justify-between">
             <Button variant="primary" type="submit" className="w-auto px-4 py-2">
               Sign Up
             </Button>
             <p className="text-sm text-gray-600">
               Already have an account?{" "}
-              <Link
-                to="/signin"
-                className="text-primary hover:underline focus:outline-none"
-              >
+              <Link to="/signin" className="text-primary hover:underline focus:outline-none">
                 Sign In
               </Link>
             </p>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import authService from "../../services/authService";
-import avatar from "../../assets/avatar.png";
+
 const UserProfile = () => {
   const [user, setUser] = useState(null);
 
@@ -9,16 +9,14 @@ const UserProfile = () => {
     setUser(userData?.user);
   }, []);
 
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
 
   return (
     <div className="flex items-center space-x-2 pr-4">
-      <img
-        src={avatar}
-        alt={`${user.name}'s profile`}
-        className="w-10 h-10 rounded-full object-cover"
+      <img 
+        src={user.image} 
+        alt={`${user.name}'s profile`} 
+        className="w-10 h-10 rounded-full object-cover" 
       />
       <div className="flex flex-col">
         <span className="text-base text-[#676E7E] font-semibold">{user.name}</span>
