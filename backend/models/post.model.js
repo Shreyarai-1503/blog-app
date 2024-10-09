@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-// Helper functions
 const formatDate = (date) => {
     const options = { day: '2-digit', month: 'long' };
     return date.toLocaleDateString('en-US', options).replace(' ', '-');
@@ -8,7 +7,6 @@ const formatDate = (date) => {
 
 const imageValidator = (v) => v === null || /^https?:\/\/.+\.(jpg|jpeg|png|gif)$/i.test(v);
 
-// Post schema definition
 const postSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -42,6 +40,5 @@ const postSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-// Create and export the Post model
 const Post = mongoose.model("Post", postSchema);
 export default Post;
