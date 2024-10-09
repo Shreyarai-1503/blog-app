@@ -33,7 +33,7 @@ export const navLinks = [
   },
   {
     label: "Log Out",
-    route: "/logout",
+    route: "/signin",
     icon: CiLogout,
   },
 ];

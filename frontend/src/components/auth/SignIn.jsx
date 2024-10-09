@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../mainContent/Button";
 import FormField from "../mainContent/FormField";
 import logo from "../../assets/logo.png";
 
 const SignIn = ({ onClose }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -22,16 +24,17 @@ const SignIn = ({ onClose }) => {
     // Here you would typically send the sign-in data to your backend
     console.log("Sign-in attempt:", formData);
     onClose();
+    navigate('/dashboard'); // Redirect to dashboard after successful sign-in
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-xl p-8 m-4 max-w-md w-full">
-        <div className="flex items-center justify-center mb-6">
-          <img src={logo} alt="Logo" className="h-10 mr-4" />
+    <div className="fixed inset-0 bg-gray-300 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg shadow-xl p-6 sm:p-8 m-4 w-full max-w-md">
+        <div className="flex flex-col sm:flex-row items-center justify-center mb-6">
+          <img src={logo} alt="Logo" className="h-10 mb-4 sm:mb-0 sm:mr-4" />
           <h2 className="text-2xl font-bold text-gray-800">Sign In</h2>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           <FormField
             label="Email"
             name="email"
@@ -48,13 +51,19 @@ const SignIn = ({ onClose }) => {
             onChange={handleChange}
             required
           />
-          <div className="flex justify-end space-x-4">
-            <Button variant="secondary" onClick={onClose} className="px-4 py-2">
-              Cancel
-            </Button>
-            <Button variant="primary" type="submit" className="px-4 py-2">
+          <div className="flex items-center justify-between">
+            <Button variant="primary" type="submit" className="w-auto px-4 py-2">
               Sign In
             </Button>
+            <p className="text-sm text-gray-600">
+              Don't have an account?{" "}
+              <Link
+                to="/signup"
+                className="text-primary hover:underline focus:outline-none"
+              >
+                Sign Up
+              </Link>
+            </p>
           </div>
         </form>
       </div>
