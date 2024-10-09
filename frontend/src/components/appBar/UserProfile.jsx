@@ -2,7 +2,7 @@ import React from "react";
 import avatar from "../../assets/avatar.png";
 
 const UserProfile = () => (
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center space-x-2 pr-4">
     <img
       src={avatar}
       alt="Profile"

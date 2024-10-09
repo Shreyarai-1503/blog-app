@@ -19,7 +19,7 @@ const Sidebar = () => {
   );
 
   return (
-    <aside className="w-16 sm:w-20 md:w-56 transition-all duration-300 flex flex-col border-r-2 border-borderGray">
+    <aside className="w-16 md:w-20 lg:w-56 transition-all duration-300 flex flex-col border-r border-borderGray">
       <nav className="flex-1 my-6 flex flex-col">
         <div className="overflow-y-auto flex-grow">
           {renderNavLinks(topLinks)}

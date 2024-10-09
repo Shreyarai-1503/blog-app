@@ -15,7 +15,7 @@ const NavLink = ({ link, isActive }) => (
       <div className="w-12 h-12 flex items-center justify-center ml-2">
         <link.icon className="w-6 h-6 md:w-8 md:h-8" />
       </div>
-      <span className="hidden md:inline ml-2">{link.label}</span>
+      <span className="hidden lg:inline ml-2">{link.label}</span>
     </Link>
   </li>
 );
