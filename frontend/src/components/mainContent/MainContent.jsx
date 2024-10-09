@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { blogPosts } from "../../constants/data";
 import Button from "./Button";
 import BlogPost from "./BlogPost";
-import AddBlog from "./AddBlog"; // Make sure to import the AddBlog component
+import AddBlog from "./AddBlog";
 
 const MainContent = () => {
   const [isAddBlogOpen, setIsAddBlogOpen] = useState(false);
