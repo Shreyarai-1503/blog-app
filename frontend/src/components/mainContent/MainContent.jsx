@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { blogPosts } from "../../constants/data";
 import Button from "./Button";
 import BlogPost from "./BlogPost";
 import AddBlog from "./AddBlog";
