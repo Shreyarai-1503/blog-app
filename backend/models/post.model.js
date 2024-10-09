@@ -5,8 +5,6 @@ const formatDate = (date) => {
     return date.toLocaleDateString('en-US', options).replace(' ', '-');
 };
 
-const imageValidator = (v) => v === null || /^https?:\/\/.+\.(jpg|jpeg|png|gif)$/i.test(v);
-
 const postSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -22,21 +20,12 @@ const postSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        default: null,
-        validate: {
-            validator: imageValidator,
-            message: 'Invalid image URL',
-        },
+        required: [true, 'Image is required'],
     },
     date: {
         type: Date,
         default: Date.now,
         get: formatDate,
-    },
-    author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: [true, 'Author is required'],
     },
 }, { timestamps: true });
 

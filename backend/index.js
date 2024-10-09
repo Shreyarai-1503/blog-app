@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './utils/db.js';
 import authRoutes from './routes/auth.routes.js';
+import postsRoutes from './routes/posts.routes.js';
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ connectDB();
 
 // Routes
 app.use('/api/auth', authRoutes);
-
+app.use('/api/posts', postsRoutes);
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
