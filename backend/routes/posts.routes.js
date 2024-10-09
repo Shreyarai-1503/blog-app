@@ -11,10 +11,10 @@ import {
 const router = express.Router();
 
 // All routes are protected and handle file upload
-router.post('/', authenticateToken, createPost);
-router.get('/', authenticateToken, getAllPosts);
-router.get('/:id', authenticateToken, getPostById);
-router.put('/:id', authenticateToken, updatePost);
-router.delete('/:id', authenticateToken, deletePost);
+router.post('/blog/', authenticateToken, createPost);
+router.get('/blog/', authenticateToken, getAllPosts);
+router.get('/blog/:id', authenticateToken, getPostById);
+router.put('/blog/:id', authenticateToken, updatePost);
+router.delete('/blog/:id', authenticateToken, deletePost);
 
 export default router;

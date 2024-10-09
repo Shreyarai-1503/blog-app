@@ -7,7 +7,7 @@ export const createPost = [
     async (req, res) => {
         try {
             const { title, content } = req.body;
-            const image = req.file ? req.file.path : null;
+            const image = req.file ? `/uploads/posts/${req.file.filename}` : null;
 
             const newPost = new Post({
                 title,

@@ -3,16 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../mainContent/Button";
 import FormField from "../mainContent/FormField";
 import logo from "../../assets/logo.png";
+import authService from "../../services/authService";
 
-const SignUp = ({ onClose }) => {
+const SignUp = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
     profilePicture: null,
+    designation: "",
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -22,12 +25,22 @@ const SignUp = ({ onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically send the sign-up data to your backend
-    console.log("Sign-up attempt:", formData);
-    onClose();
-    navigate('/dashboard'); // Redirect to dashboard after successful sign-up
+    setError("");
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await authService.signup(formData);
+      navigate('/blog');
+    } catch (error) {
+      console.error("Sign-up error:", error);
+      setError(error.response?.data?.message || error.message || "An error occurred during sign-up");
+    }
   };
 
   return (
@@ -39,10 +52,10 @@ const SignUp = ({ onClose }) => {
         </div>
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
           <FormField
-            label="Username"
-            name="username"
+            label="Name"
+            name="name"
             type="text"
-            value={formData.username}
+            value={formData.name}
             onChange={handleChange}
             required
           />
@@ -70,6 +83,14 @@ const SignUp = ({ onClose }) => {
             onChange={handleChange}
             required
           />
+          <FormField
+            label="Designation"
+            name="designation"
+            type="text"
+            value={formData.designation}
+            onChange={handleChange}
+            required
+          />
           <div className="space-y-2">
             <label
               htmlFor="profilePicture"
@@ -90,6 +111,9 @@ const SignUp = ({ onClose }) => {
                 file:bg-purple-50 file:text-primary"
             />
           </div>
+          {error && (
+            <div className="text-red-500 text-sm">{error}</div>
+          )}
           <div className="flex items-center justify-between">
             <Button variant="primary" type="submit" className="w-auto px-4 py-2">
               Sign Up

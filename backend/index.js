@@ -3,10 +3,19 @@ import dotenv from 'dotenv';
 import connectDB from './utils/db.js';
 import authRoutes from './routes/auth.routes.js';
 import postsRoutes from './routes/posts.routes.js';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
+
+// CORS configuration
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  optionsSuccessStatus: 200 
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

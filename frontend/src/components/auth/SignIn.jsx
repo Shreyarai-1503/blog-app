@@ -3,13 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../mainContent/Button";
 import FormField from "../mainContent/FormField";
 import logo from "../../assets/logo.png";
+import authService from "../../services/authService";
 
-const SignIn = ({ onClose }) => {
+const SignIn = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,12 +21,16 @@ const SignIn = ({ onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically send the sign-in data to your backend
-    console.log("Sign-in attempt:", formData);
-    onClose();
-    navigate('/dashboard'); // Redirect to dashboard after successful sign-in
+    setError("");
+    try {
+      const response = await authService.signin(formData);
+      navigate('/blog');
+    } catch (error) {
+      console.error("Sign-in error:", error);
+      setError("Invalid email or password. Please try again.");
+    }
   };
 
   return (
@@ -51,6 +57,9 @@ const SignIn = ({ onClose }) => {
             onChange={handleChange}
             required
           />
+          {error && (
+            <p className="text-red-500 text-sm">{error}</p>
+          )}
           <div className="flex items-center justify-between">
             <Button variant="primary" type="submit" className="w-auto px-4 py-2">
               Sign In

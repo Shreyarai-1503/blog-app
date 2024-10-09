@@ -5,10 +5,21 @@ import upload from '../utils/uploadConfig.js';
 
 // Register controller
 export const register = [
-  upload.single('image'),
+  upload.single('profilePicture'),
   async (req, res) => {
     try {
       const { name, email, password, designation } = req.body;
+
+      // Check if all required fields are present
+      if (!name || !email || !password || !designation) {
+        return res.status(400).json({ message: 'All fields are required' });
+      }
+
+      // Check if user already exists
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ message: 'User already exists' });
+      }
 
       // Hash password
       const salt = await bcrypt.genSalt(10);
@@ -20,14 +31,31 @@ export const register = [
         email,
         password: hashedPassword,
         designation,
-        image: req.file ? `/uploads/${req.file.filename}` : null
+        image: req.file ? `/uploads/avatars/${req.file.filename}` : null
       });
 
       // Save user to database
       await newUser.save();
 
-      res.status(201).json({ message: 'User registered successfully' });
+      // Generate JWT token
+      const token = jwt.sign(
+        { id: newUser._id, email: newUser.email },
+        process.env.JWT_SECRET,
+        { expiresIn: '1d' }
+      );
+
+      res.status(201).json({
+        token,
+        user: {
+          id: newUser._id,
+          name: newUser.name,
+          email: newUser.email,
+          designation: newUser.designation,
+          image: newUser.image
+        }
+      });
     } catch (error) {
+      console.error('Server error during registration:', error);
       res.status(500).json({ message: 'Error registering user', error: error.message });
     }
   }
