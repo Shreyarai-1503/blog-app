@@ -15,7 +15,9 @@ const NavLink = ({ link, isActive }) => {
 
   return (
     <li className="relative">
-      {isActive && <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />}
+      {isActive && (
+        <div className="absolute left-0 right-0 bottom-0 h-1 sm:h-auto sm:w-1 sm:top-0 sm:bottom-0 bg-primary" />
+      )}
       <Link
         className={`flex items-center p-2 text-lg font-semibold ${isActive ? "text-primary" : "text-customGray"}`}
         to={link.route}

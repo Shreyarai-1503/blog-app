@@ -15,11 +15,11 @@ function App() {
         <Route
           path="/*"
           element={
-            <div className="app flex flex-col h-screen">
+            <div className="app flex flex-col h-screen overflow-hidden">
               <Header />
-              <div className="flex flex-1">
+              <div className="flex flex-1 overflow-hidden">
                 <Sidebar />
-                <main className="flex-1 p-4 bg-background">
+                <main className="flex-1 p-4 bg-background overflow-y-auto">
                   <MainContent />
                 </main>
               </div>
